@@ -1,0 +1,27 @@
+{
+  "name": "concept-net",
+  "version": "1.0.0",
+  "description": "Test task for building a hierarchical JSON structure from a concept graph",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "tier1": "node tier1/concept-net.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trevithj/conceptNet.git"
+  },
+  "keywords": [
+    "nodejs",
+    "concepts"
+  ],
+  "author": "John Trevithick <trevithj@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trevithj/conceptNet/issues"
+  },
+  "homepage": "https://github.com/trevithj/conceptNet#readme",
+  "devDependencies": {
+    "jest": "24.8.0"
+  }
+}

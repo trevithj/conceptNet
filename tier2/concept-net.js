@@ -1,4 +1,4 @@
-// Tier1 version
+// Tier2 version
 const usage = `Required argument is missing.
 Usage:
 > node concept-net.js <searchTerm>
@@ -8,7 +8,7 @@ If running via npm:
 Examples:
 > node concept-net.js "sausage"
 > node concept-net.js "save me" > output.json
-> npm run tier1 "testing"
+> npm run tier2 "testing"
 `;
 
 if (process.argv.length < 3) {

@@ -1,6 +1,7 @@
 // Tier1 version
 const Data = require('./Data');
 const getTerm = new Data().getTerm;
+const cloneDeep = require('lodash/cloneDeep');
 
 const getVisitCount = map => node => {
 	const count = map[node] || 0;
@@ -47,13 +48,21 @@ const examineTree = term => {
 	return { deepest, net };
 };
 
-
-const recursiveBuildJSON = (json, net, node) => {
-	const children = net[node] || [];
-	children.forEach(child => {
-		json[child] = {};
-		recursiveBuildJSON(json[child], net, child);
-	});
+const getRecursiveBuildJSON = (net, visited) => {
+	const recursiveBuildJSON = (json, node) => {
+		const children = net[node] || [];
+		children.forEach(child => {
+			const vChild = visited[child];
+			if(vChild) {
+				json[child] = cloneDeep(vChild);
+			} else {
+				visited[child] = {};
+				json[child] = visited[child];
+				recursiveBuildJSON(json[child], child);
+			}
+		});
+	}
+	return recursiveBuildJSON;
 }
 
 const doProcess = term => {
@@ -62,11 +71,16 @@ const doProcess = term => {
 	if (deepest.depth > 0) {
 		//assume the deepest node is the most general concept
 		const root = deepest.node;
+		const visited = {};
 		json[root] = {};
-		recursiveBuildJSON(json[root], net, deepest.node);
+		console.log('net', net);
+		console.log('deepest', deepest);
+		const recursiveBuildJSON = getRecursiveBuildJSON(net, visited);
+		recursiveBuildJSON(json[root], deepest.node);
+		console.log('visited', JSON.stringify(visited, null, 2));
 	}
-	
-	return { deepest, net, json};
+
+	return { deepest, net, json };
 };
 
 module.exports = doProcess;
